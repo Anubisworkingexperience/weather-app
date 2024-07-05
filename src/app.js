@@ -7,32 +7,41 @@ const locationTime = document.querySelector('.location-time');
 const degreesInfo = document.querySelector('.degrees');
 const weatherText = document.querySelector('.weather-desc');
 const switchDegreesButton = document.querySelector('.switch-degrees');
+const feelsLikeDegrees = document.querySelector('.feels-degrees');
+const lastUpdated = document.querySelector('.last-updated');
+const humidity = document.querySelector('.humidity');
+const precipitation = document.querySelector('.precipitation');
+const pressure = document.querySelector('.pressure');
+const visibility = document.querySelector('.visibility');
+const windDirection = document.querySelector('.wind-direction');
+const windSpeed = document.querySelector('.wind-speed');
 
-
-fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb17175426240106&q=Ottawa&aqi=yes`, {mode:'cors'}).then(response => {
+fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb17175426240106&q=New York&aqi=yes`, {mode:'cors'}).then(response => {
   return response.json().then(function(response) {
     console.log(response);
 
     let location = response.location;
     let currentWeather = response.current;
 
-    function switchDegreeValues() {
+    const switchDegreeValues = function() {
       let currentDegrees = 'c';
       switchDegreesButton.addEventListener('click', () => {
         if (currentDegrees === 'c') {
           currentDegrees = 'f';
           degreesInfo.textContent = currentWeather.temp_f + ' °F';
           switchDegreesButton.textContent = 'Switch to celcius';
+          feelsLikeDegrees.textContent = 'Feels like: ' + currentWeather.feelslike_f + ' °F';
         }
         else {
           currentDegrees = 'c';
           degreesInfo.textContent = currentWeather.temp_c + ' °C';
-          switchDegreesButton.textContent = 'Switch to farenheit';
+          switchDegreesButton.textContent = 'Switch to fahrenheit';
+          feelsLikeDegrees.textContent = 'Feels like: ' + currentWeather.feelslike_c + ' °C';
         }
       });
       }
 
-    function formatDateAndTime() {
+    const formatDateAndTime = function() {
       const weekDayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const monthArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       
@@ -57,12 +66,29 @@ fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb171754262
     }
 
     formatDateAndTime();
-  
-    userLocation.textContent = location.name.concat(', ', location.country);
-    weatherText.textContent = currentWeather.condition.text;
-    degreesInfo.textContent = currentWeather.temp_c + ' °C';
 
-    function setWeatherIcons() {
+    const setCurrentWeatherInformation = function() {
+      userLocation.textContent = `${location.name}, ${location.country}`;
+
+      weatherText.textContent = currentWeather.condition.text;
+
+      degreesInfo.textContent = `${currentWeather.temp_c} °C`;
+      feelsLikeDegrees.textContent = `Feels like: ${currentWeather.feelslike_c} °C`;
+      
+      lastUpdated.textContent = `Last updated: ${currentWeather.last_updated}`;
+      
+      humidity.textContent = `Humidity: ${currentWeather.humidity}%`;
+      precipitation.textContent = `Precipitation: ${currentWeather.precip_mm} mm`;
+      pressure.textContent = `Pressure: ${currentWeather.pressure_mb} mb`;
+      visibility.textContent = `Visibility: ${currentWeather.vis_km} km`;
+      
+      windDirection.textContent = `Wind direction: ${currentWeather.wind_degree}° ${currentWeather.wind_dir}`;
+      windSpeed.textContent = `Wind speed: ${currentWeather.wind_kph} km/h`;
+    }
+
+    setCurrentWeatherInformation();
+    
+    const setWeatherIcons = function() {
       let weatherIconCode = currentWeather.condition.code;
       console.log(weatherIconCode);
       let isDay = currentWeather.is_day;
