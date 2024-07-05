@@ -1,6 +1,5 @@
 import { conditionsArray } from "./conditions.js";
 
-const searchField = document.querySelector('#search');
 const userLocation = document.querySelector('.user-location');
 const locationDate = document.querySelector('.location-date');
 const locationTime = document.querySelector('.location-time');
@@ -16,7 +15,25 @@ const visibility = document.querySelector('.visibility');
 const windDirection = document.querySelector('.wind-direction');
 const windSpeed = document.querySelector('.wind-speed');
 
-fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb17175426240106&q=New York&aqi=yes`, {mode:'cors'}).then(response => {
+const searchForLocation = function() {
+  const searchField = document.querySelector('#search');
+  const searchIcon = document.querySelector('.search-icon');
+
+  searchIcon.addEventListener('click', () => {
+    if (searchField.value !== '') {
+      query = searchField.value;
+      console.log(query);
+      fetchQuery(query);
+    }
+  });
+}
+
+searchForLocation();
+
+let query = 'Moscow';
+
+const fetchQuery = function(query) {
+fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb17175426240106&q=${query}&aqi=yes`, {mode:'cors'}).then(response => {
   return response.json().then(function(response) {
     console.log(response);
 
@@ -128,4 +145,6 @@ fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb171754262
     switchDegreeValues();
   });
 });
+}
 
+fetchQuery(query);
