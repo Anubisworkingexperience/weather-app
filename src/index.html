@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather app</title>
   <link rel="stylesheet" href="./style.css">
-  <link rel="shortcut icon" href="./icons/sun.png" type="image/x-icon">
+  <link rel="stylesheet" href="./css/weather-icons.min.css">
+  <link rel="shortcut icon" href="./assets/sun.png" type="image/x-icon">
 </head>
 <body>
   <div class="search-container">
     <input type="text" name="search" id="search" placeholder="Search for location">
-    <img src="./icons/search-interface-symbol.png" alt="search icon" class="search-icon">
+    <img src="./assets/search-interface-symbol.png" alt="search icon" class="search-icon">
   </div>
   <div class="user-location">Moscow, Russia</div>
   <div class="location-date">Tuesday, 2nd Jul '24</div>
@@ -18,7 +19,7 @@
   <div class="degrees">22 °C / 100 °F</div>
   <div class="switch-degrees">Switch to farenheit</div>
   <div class="weather-desc">Cloudy</div>
-  <img src="#" alt="" class="weather-icon">
-  <script src="./app.js"></script>
+  <i class="wi wi-day-sunny currentWeatherIcon"></i>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>

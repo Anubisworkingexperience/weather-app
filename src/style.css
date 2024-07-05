@@ -11,3 +11,8 @@ body {
   height: 20px;
   width: 20px;
 }
+
+i{
+  font-size: 3.5rem;
+  color: purple;
+}
