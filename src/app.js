@@ -26,6 +26,14 @@ const searchForLocation = function() {
       fetchQuery(query);
     }
   });
+
+  searchField.addEventListener('search', () => {
+    if (searchField.value !== '') {
+      query = searchField.value;
+      console.log(query);
+      fetchQuery(query);
+    }
+  });
 }
 
 searchForLocation();
