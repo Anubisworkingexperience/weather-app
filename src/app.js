@@ -23,7 +23,7 @@ const searchForLocation = function() {
     if (searchField.value !== '') {
       query = searchField.value;
       console.log(query);
-      fetchQuery(query);
+      fetchCurrentWeatherQuery(query);
     }
   });
 
@@ -31,7 +31,7 @@ const searchForLocation = function() {
     if (searchField.value !== '') {
       query = searchField.value;
       console.log(query);
-      fetchQuery(query);
+      fetchCurrentWeatherQuery(query);
     }
   });
 }
@@ -40,8 +40,8 @@ searchForLocation();
 
 let query = 'Moscow';
 
-const fetchQuery = function(query) {
-fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb17175426240106&q=${query}&aqi=yes`, {mode:'cors'}).then(response => {
+const fetchCurrentWeatherQuery = function(query) {
+  fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb17175426240106&q=${query}&aqi=yes`, {mode:'cors'}).then(response => {
   return response.json().then(function(response) {
     console.log(response);
 
@@ -124,6 +124,7 @@ fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb171754262
 
       if (isDay) {
         if (weatherIconCode === 1000) {
+          weatherText.textContent = 'Sunny';
           currentWeatherIcon.classList.add(`wi-day-sunny`);
         }
         else {
@@ -136,6 +137,7 @@ fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb171754262
       }
       else {
         if (weatherIconCode === 1000) {
+          weatherText.textContent = 'Clear';
           currentWeatherIcon.classList.add(`wi-night-clear`);
         }
         else {
@@ -153,6 +155,79 @@ fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb171754262
     switchDegreeValues();
   });
 });
+
 }
 
-fetchQuery(query);
+fetchCurrentWeatherQuery(query);
+
+const fetchForecastQuery = function() {
+  fetch(`https://api.weatherapi.com/v1/forecast.json?key=c00761ba763b43ccb17175426240106&q=Moscow&days=10&aqi=no&alerts=yes`, {mode: "cors"}).then(response => {
+    return response.json().then(function(response){
+      console.log(response);
+
+      let isDay = response.current.is_day;
+
+      const forecastContainer = document.querySelector('.forecast-container');
+      const forecastArray = response.forecast.forecastday;
+      const quickForecastContainer = document.createElement('div');
+      quickForecastContainer.classList.add('quick-forecast-container');
+      forecastContainer.appendChild(quickForecastContainer);
+
+      console.log(forecastArray);
+
+      const showQuickForecast = function() {
+      for (let day of forecastArray) {
+        let dayElement = document.createElement('div');
+        dayElement.classList.add('day');
+        quickForecastContainer.appendChild(dayElement);
+
+        let date = document.createElement('div');
+        date.textContent = day.date;
+        dayElement.appendChild(date);
+
+        let minTemperature = document.createElement('div');
+        minTemperature.textContent = day.day.mintemp_c;
+        dayElement.appendChild(minTemperature);
+
+        let maxTemperature = document.createElement('div');
+        maxTemperature.textContent = day.day.maxtemp_c;
+        dayElement.appendChild(maxTemperature);
+
+        let condition = document.createElement('i');
+        condition.className = '';
+        condition.classList.add('wi');
+
+        dayElement.appendChild(condition);
+        let dayConditionCode = day.day.condition.code;
+        
+        conditionsArray.map(function(item) {
+          if (isDay) {
+            if (item.code !== 1000 && item.code === dayConditionCode) {
+              condition.classList.add(`wi-day-${item.icon}`);
+            }
+            else {
+              if (item.code === 1000) {
+              condition.classList.add(`wi-day-sunny`);
+              }
+            }
+          }
+          else {
+            if (item.code !== 1000 && item.code === dayConditionCode) {
+              condition.classList.add(`wi-night-${item.icon}`);
+            }
+            else {
+              if (item.code === 1000)
+              condition.classList.add(`wi-day-clear`);
+            }
+          }
+          return item;
+        });
+      }
+    }
+    
+    showQuickForecast();
+    });
+  });
+}
+
+fetchForecastQuery();

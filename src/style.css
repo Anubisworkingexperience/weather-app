@@ -16,3 +16,13 @@ i{
   font-size: 3.5rem;
   color: purple;
 }
+
+.quick-forecast-container {
+  display: flex;
+  gap: 10px;
+}
+
+.day {
+  padding: 20px;
+  border: 2px solid black;
+}
