@@ -21,24 +21,24 @@ const searchForLocation = function() {
 
   searchIcon.addEventListener('click', () => {
     if (searchField.value !== '') {
-      query = searchField.value;
+      let query = searchField.value;
       console.log(query);
       fetchCurrentWeatherQuery(query);
+      fetchForecastQuery(query);
     }
   });
 
   searchField.addEventListener('search', () => {
     if (searchField.value !== '') {
-      query = searchField.value;
+      let query = searchField.value;
       console.log(query);
       fetchCurrentWeatherQuery(query);
+      fetchForecastQuery(query);
     }
   });
 }
 
 searchForLocation();
-
-let query = 'Moscow';
 
 const fetchCurrentWeatherQuery = function(query) {
   fetch(`https://api.weatherapi.com/v1/current.json?key=c00761ba763b43ccb17175426240106&q=${query}&aqi=yes`, {mode:'cors'}).then(response => {
@@ -158,10 +158,12 @@ const fetchCurrentWeatherQuery = function(query) {
 
 }
 
-fetchCurrentWeatherQuery(query);
+const defaultCurrentWeatherQuery = 'Moscow';
 
-const fetchForecastQuery = function() {
-  fetch(`https://api.weatherapi.com/v1/forecast.json?key=c00761ba763b43ccb17175426240106&q=Moscow&days=10&aqi=no&alerts=yes`, {mode: "cors"}).then(response => {
+fetchCurrentWeatherQuery(defaultCurrentWeatherQuery);
+
+const fetchForecastQuery = function(query) {
+  fetch(`https://api.weatherapi.com/v1/forecast.json?key=c00761ba763b43ccb17175426240106&q=${query}&days=10&aqi=no&alerts=yes`, {mode: "cors"}).then(response => {
     return response.json().then(function(response){
       console.log(response);
 
@@ -199,7 +201,7 @@ const fetchForecastQuery = function() {
 
         dayElement.appendChild(condition);
         let dayConditionCode = day.day.condition.code;
-        
+
         conditionsArray.map(function(item) {
           if (isDay) {
             if (item.code !== 1000 && item.code === dayConditionCode) {
@@ -230,4 +232,6 @@ const fetchForecastQuery = function() {
   });
 }
 
-fetchForecastQuery();
+const defaultForecastQuery = 'Moscow';
+
+fetchForecastQuery(defaultForecastQuery);
