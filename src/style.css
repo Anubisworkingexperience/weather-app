@@ -26,3 +26,7 @@ i{
   padding: 20px;
   border: 2px solid black;
 }
+
+.search-error {
+  color: red;
+}
