@@ -24,6 +24,7 @@ const searchForLocation = function() {
       let query = searchField.value;
       console.log(query);
       fetchCurrentWeatherQuery(query);
+      removeLastForecast();
       fetchForecastQuery(query);
     }
   });
@@ -33,9 +34,16 @@ const searchForLocation = function() {
       let query = searchField.value;
       console.log(query);
       fetchCurrentWeatherQuery(query);
+      removeLastForecast();
       fetchForecastQuery(query);
     }
   });
+}
+
+const removeLastForecast = function() {
+  const quickForecastContainer = document.querySelector('.quick-forecast-container');
+  const forecastContainer = document.querySelector('.forecast-container');
+  forecastContainer.removeChild(quickForecastContainer);  
 }
 
 searchForLocation();
@@ -219,7 +227,7 @@ const fetchForecastQuery = function(query) {
             }
             else {
               if (item.code === 1000)
-              condition.classList.add(`wi-day-clear`);
+              condition.classList.add(`wi-night-clear`);
             }
           }
           return item;
