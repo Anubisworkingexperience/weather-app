@@ -20,22 +20,19 @@ const searchForLocation = function() {
   const searchIcon = document.querySelector('.search-icon');
 
   searchIcon.addEventListener('click', () => {
-    try {
-      if (searchField.value !== '') {
-        let query = searchField.value;
-        console.log(query);
-        fetchCurrentWeatherQuery(query);
-        removeLastForecast();
-        fetchForecastQuery(query);
-      }
-      }
-      catch(error) {
-        console.log('some dumb error');
-      }
+    if (searchField.value !== '') {
+      searchError.textContent = '';
+      let query = searchField.value;
+      console.log(query);
+      fetchCurrentWeatherQuery(query);
+      removeLastForecast();
+      fetchForecastQuery(query);
+    }
   });
 
   searchField.addEventListener('search', () => {
     if (searchField.value !== '') {
+      searchError.textContent = '';
       let query = searchField.value;
       console.log(query);
       fetchCurrentWeatherQuery(query);
@@ -168,11 +165,13 @@ const fetchCurrentWeatherQuery = function(query) {
     switchDegreeValues();
   })
   .catch(error => {
-    console.log('idk', error);
-    searchError.textContent = 'No matching location found';
+    const searchField = document.querySelector('#search');
+    if (searchField.value !== '') {
+      searchError.textContent = 'No matching location found';
+      }
   });
 });
-
+  return location;
 }
 
 const searchError = document.querySelector('.search-error');
@@ -249,11 +248,17 @@ const fetchForecastQuery = function(query) {
     });
   })
   .catch(error => {
-    console.log('idk', error);
+    const searchField = document.querySelector('#search');
+    if (searchField.value !== '') {
     searchError.textContent = 'No matching location found';
+    }
+    fetchForecastQuery(defaultForecastQuery);
   });
 }
 
 const defaultForecastQuery = 'Moscow';
+
+const currentLocation = fetchCurrentWeatherQuery();
+console.log(currentLocation);
 
 fetchForecastQuery(defaultForecastQuery);
