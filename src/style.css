@@ -1,5 +1,6 @@
 body {
   font-size: 1.2rem;
+  margin: 0;
 }
 
 #search {
@@ -17,7 +18,7 @@ i{
   color: purple;
 }
 
-.quick-forecast-container {
+.quick-forecast-container, .hour-forecast-container {
   display: flex;
   gap: 10px;
 }
@@ -29,4 +30,16 @@ i{
 
 .search-error {
   color: red;
+}
+
+.search-container {
+  background-color: #09f;
+  padding: 2px 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.search-icon:hover {
+  cursor: pointer;
 }

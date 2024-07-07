@@ -179,6 +179,33 @@ const defaultCurrentWeatherQuery = 'Moscow';
 
 fetchCurrentWeatherQuery(defaultCurrentWeatherQuery);
 
+const updateConditionIcon = function(conditionArray, iconElement, currentWeatherCode) {
+  if (isDay) {
+    if (currentWeatherCode === 1000) {
+      iconElement.classList.add(`wi-day-sunny`);
+    }
+    else {
+      for (let item of conditionArray) {
+        if (item.code !== 1000 && item.code === currentWeatherCode) {
+          iconElement.classList.add(`wi-day-${item.icon}`);
+        }
+      }
+    }
+  }
+  else {
+    if (currentWeatherCode === 1000) {
+      iconElement.classList.add(`wi-night-clear`);
+    }
+    else {
+      for (let item of conditionArray) {
+        if (item.code !== 1000 && item.code === currentWeatherCode) {
+        iconElement.classList.add(`wi-night-${item.icon}`);
+        }
+      }
+    }
+  }   
+} 
+
 const fetchForecastQuery = function(query) {
   fetch(`https://api.weatherapi.com/v1/forecast.json?key=c00761ba763b43ccb17175426240106&q=${query}&days=10&aqi=no&alerts=yes`, {mode: "cors"}).then(response => {
     return response.json().then(function(response){
@@ -245,6 +272,32 @@ const fetchForecastQuery = function(query) {
     }
     
     showQuickForecast();
+
+    const showHourForecast = function(date) {
+      const hourForecastContainer = document.createElement('div');
+      hourForecastContainer.classList.add('hour-forecast-container');
+      forecastContainer.appendChild(hourForecastContainer);
+      const forecastHourArray = forecastArray.hour;
+      console.log(forecastHourArray);
+      
+      for (let currentHour of forecastHourArray) {
+        let hourElement = document.createElement('div');
+        hourElement.classList.add('hour');
+        hourForecastContainer.appendChild(hourElement);
+
+        let hourTime = document.createElement('div');
+        hourTime.textContent = `${currentHour.time.getHours()}:${currentHour.time.getMinutes()}`;
+        hourElement.appendChild(hourTime);
+
+        let currentCondition = document.createElement('i');
+        hourElement.appendChild(currentCondition);
+
+        let hourCode = currentHour.hour.condition.code;
+        updateConditionIcon(conditionsArray, currentCondition, hourCode);
+      }
+    }
+    // showHourForecast();
+
     });
   })
   .catch(error => {
