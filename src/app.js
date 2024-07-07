@@ -249,16 +249,16 @@ const fetchForecastQuery = function(query) {
   })
   .catch(error => {
     const searchField = document.querySelector('#search');
+    const previousLocation = userLocation.textContent.split(',')[0];
+    console.log(previousLocation);
     if (searchField.value !== '') {
     searchError.textContent = 'No matching location found';
     }
-    fetchForecastQuery(defaultForecastQuery);
+    console.log(userLocation);
+    fetchForecastQuery(previousLocation);
   });
 }
 
 const defaultForecastQuery = 'Moscow';
-
-const currentLocation = fetchCurrentWeatherQuery();
-console.log(currentLocation);
 
 fetchForecastQuery(defaultForecastQuery);
