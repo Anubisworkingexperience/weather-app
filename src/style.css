@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
   font-size: 1.2rem;
   margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 #search {
@@ -23,9 +29,18 @@ i{
   gap: 10px;
 }
 
+.hour-container, .hour-forecast-degree-container {
+  display: flex;
+  gap: 15px;
+}
+
+.hour-forecast-container {
+  flex-direction: column;
+}
+
 .day {
   padding: 20px;
-  border: 2px solid black;
+  border: 1px solid black;
 }
 
 .search-error {
@@ -40,6 +55,16 @@ i{
   gap: 5px;
 }
 
-.search-icon:hover {
+.search-icon:hover, .switch-degrees:hover {
   cursor: pointer;
+}
+
+.switch-degrees {
+  color: blue;
+  display: inline;
+}
+
+.hour {
+  border: 1px solid black;
+  padding: 20px;
 }

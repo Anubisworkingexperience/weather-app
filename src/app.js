@@ -273,30 +273,54 @@ const fetchForecastQuery = function(query) {
     
     showQuickForecast();
 
-    const showHourForecast = function(date) {
-      const hourForecastContainer = document.createElement('div');
-      hourForecastContainer.classList.add('hour-forecast-container');
-      forecastContainer.appendChild(hourForecastContainer);
-      const forecastHourArray = forecastArray.hour;
-      console.log(forecastHourArray);
-      
-      for (let currentHour of forecastHourArray) {
-        let hourElement = document.createElement('div');
-        hourElement.classList.add('hour');
-        hourForecastContainer.appendChild(hourElement);
+    const hourForecastContainer = document.createElement('div');
+    hourForecastContainer.classList.add('hour-forecast-container');
+    forecastContainer.appendChild(hourForecastContainer);
 
-        let hourTime = document.createElement('div');
-        hourTime.textContent = `${currentHour.time.getHours()}:${currentHour.time.getMinutes()}`;
-        hourElement.appendChild(hourTime);
+    const hourContainer = document.createElement('div');
+    hourContainer.classList.add('hour-container');
+    hourForecastContainer.appendChild(hourContainer);
 
-        let currentCondition = document.createElement('i');
-        hourElement.appendChild(currentCondition);
+    const hourForecastDegreeContainer = document.createElement('div');
+    hourForecastDegreeContainer.classList.add('hour-forecast-degree-container');
+    hourForecastContainer.appendChild(hourForecastDegreeContainer);
 
-        let hourCode = currentHour.hour.condition.code;
-        updateConditionIcon(conditionsArray, currentCondition, hourCode);
+    const showDayHourForecast = function(day) {
+      let hourArray = day.hour;
+
+      for (let i = 1; i < hourArray.length; i += 3) {
+      let date = new Date(hourArray[i].time);
+
+      let hourElement = document.createElement('div');
+      hourElement.classList.add('hour');
+      hourForecastContainer.appendChild(hourElement);
+
+      let hourTime = document.createElement('div');
+      hourTime.textContent = `${date.getHours()}:${date.getMinutes()}0`;
+      hourElement.appendChild(hourTime);
+
+      // let currentCondition = document.createElement('i');
+      // hourElement.appendChild(currentCondition);
+
+      // let hourCode = hourArray[i].hour.condition.code;
+        hourContainer.appendChild(hourElement);
+
+        let temperatureDegreesElement = document.createElement('div');
+        temperatureDegreesElement.classList.add('hour-degree');
+        temperatureDegreesElement.textContent = `${hourArray[i].temp_c}`;
+        hourForecastDegreeContainer.appendChild(temperatureDegreesElement);
       }
     }
-    // showHourForecast();
+
+    let firstDay = forecastArray[0];
+    console.log(forecastArray[0]);
+    console.log(forecastArray[0].hour)
+
+    showDayHourForecast(firstDay);
+
+    const temperatureText = document.createElement('div');
+    temperatureText.textContent = `Temperature, °C`;
+    hourForecastContainer.insertBefore(temperatureText, hourForecastDegreeContainer);
 
     });
   })
