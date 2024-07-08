@@ -24,7 +24,13 @@ i{
   color: purple;
 }
 
-.quick-forecast-container, .hour-forecast-container {
+.add-icon {
+  font-size: 1.3em;
+}
+
+.quick-forecast-container, .hour-forecast-container, .humidity-container
+, .precipitation-container, .pressure-container, .visibility-container,
+.wind-direction-container, .wind-speed-container{
   display: flex;
   gap: 10px;
 }
