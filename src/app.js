@@ -45,7 +45,9 @@ const searchForLocation = function() {
 const removeLastForecast = function() {
   const quickForecastContainer = document.querySelector('.quick-forecast-container');
   const forecastContainer = document.querySelector('.forecast-container');
-  forecastContainer.removeChild(quickForecastContainer);  
+  const hourForecastContainer = document.querySelector('.hour-forecast-container');
+  forecastContainer.removeChild(quickForecastContainer);
+  forecastContainer.removeChild(hourForecastContainer);  
 }
 
 searchForLocation();

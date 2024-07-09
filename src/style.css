@@ -82,15 +82,15 @@ i{
 }
 
 .hour {
-  border: 1px solid black;
+  width: 3.2rem;
   text-align: center;
 }
 
-.hour-degree .hour {
-  padding: 20px;
-  width: 3rem;
-  border: 1px solid black;
+.hour-degree, .hour {
+  width: 3.2rem;
+  text-align: center;
 }
+
 
 .location-time, .switch-degrees {
   margin-bottom: 10px;
