@@ -224,9 +224,17 @@ const fetchForecastQuery = function(query) {
       console.log(forecastArray);
 
       const showQuickForecast = function() {
+        let counter = 0;
       for (let day of forecastArray) {
+        counter += 1
         let dayElement = document.createElement('div');
         dayElement.classList.add('day');
+        dayElement.style.borderRadius = '5px 5px 0 0';
+
+        if (counter === 1) {
+        dayElement.style.border = '2px solid black';
+        dayElement.style.borderBottom = 'none';
+        }
         quickForecastContainer.appendChild(dayElement);
 
         let date = document.createElement('div');
@@ -321,6 +329,8 @@ const fetchForecastQuery = function(query) {
     showDayHourForecast(firstDay);
 
     const temperatureText = document.createElement('div');
+    temperatureText.classList.add('hour-temperature-text');
+    temperatureText.style.textAlign = 'center';
     temperatureText.textContent = `Temperature, °C`;
     hourForecastContainer.insertBefore(temperatureText, hourForecastDegreeContainer);
 
