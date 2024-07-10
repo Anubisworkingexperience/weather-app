@@ -48,18 +48,11 @@ i{
   gap: 15px;
 }
 
-.hour-forecast-container {
-  flex-direction: column;
-  background-color: rgb(228, 249, 255);
-  padding: 15px;
-  display: inline-block;
-  border: 2px solid black;
-  border-radius: 0 0 5px 5px;
-  border-top: none;
-}
-
 .day {
-  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
   border: 1px solid black;
   background-color: rgb(228, 249, 255);
   border-radius: 5px;
@@ -109,12 +102,6 @@ i{
   font-size: 1.5rem;
 }
 
-.quick-forecast-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 12%));
-  gap: 15px;
-}
-
 .currentWeatherIcon {
   margin-bottom: 5px;
   margin-top: 10px;
@@ -122,4 +109,49 @@ i{
 
 .hour-temperature-text {
   margin: 15px 0;
+}
+
+.forecast-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.hour-forecast-container, .quick-forecast-container {
+  width: 40%;
+  min-width: max-content;
+  box-sizing: border-box;
+}
+
+.quick-forecast-container {
+  display: flex;
+  gap: 15px;
+}
+
+.hour-forecast-container {
+  flex-direction: column;
+  background-color: rgb(228, 249, 255);
+  padding: 15px; 
+  border: 2px solid black;
+  border-radius: 0 0 5px 5px;
+  border-top: none;
+  width: 20%;
+}
+
+.quick-forecast-temperature {
+  display: flex;
+  gap: 10px;
+}
+
+.min, .max {
+  padding: 2px;
+  font-size: 1.5rem;
+}
+
+.min {
+  padding-top: 15px;
+}
+
+.max {
+  padding-top: 5px;
 }

@@ -100,9 +100,12 @@ const fetchCurrentWeatherQuery = function(query) {
         minute = '0' + minute.toString();
       }
       locationTime.textContent = `${hour}:${minute}`;
+      return {weekDayArray, monthArray};
     }
 
     formatDateAndTime();
+
+    let dateArrays = formatDateAndTime();
 
     const setCurrentWeatherInformation = function() {
       userLocation.textContent = `${location.name}, ${location.country}`;
@@ -237,17 +240,29 @@ const fetchForecastQuery = function(query) {
         }
         quickForecastContainer.appendChild(dayElement);
 
+        const weekDayArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const monthArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
         let date = document.createElement('div');
-        date.textContent = day.date;
+        let formattedDate = new Date(day.date);
+        date.textContent = `${weekDayArray[formattedDate.getDay()]}, ${formattedDate.getDate()} ${monthArray[formattedDate.getMonth()]}`;
         dayElement.appendChild(date);
 
         let minTemperature = document.createElement('div');
-        minTemperature.textContent = day.day.mintemp_c;
+        minTemperature.classList.add('min');
+        minTemperature.textContent = day.day.mintemp_c > 0 ? '+' + day.day.mintemp_c : '-' + day.day.mintemp_c;
         dayElement.appendChild(minTemperature);
 
         let maxTemperature = document.createElement('div');
-        maxTemperature.textContent = day.day.maxtemp_c;
+        maxTemperature.classList.add('max');
+        maxTemperature.textContent = day.day.maxtemp_c > 0 ? '+' + day.day.maxtemp_c : '-' + day.day.maxtemp_c;
         dayElement.appendChild(maxTemperature);
+
+        let temperatureContainer = document.createElement('div');
+        temperatureContainer.classList.add('quick-forecast-temperature');
+        temperatureContainer.appendChild(minTemperature);
+        temperatureContainer.appendChild(maxTemperature);
+        dayElement.appendChild(temperatureContainer);
 
         let condition = document.createElement('i');
         condition.className = '';
@@ -278,6 +293,7 @@ const fetchForecastQuery = function(query) {
           }
           return item;
         });
+        temperatureContainer.appendChild(condition);
       }
     }
     
@@ -333,19 +349,18 @@ const fetchForecastQuery = function(query) {
     temperatureText.style.textAlign = 'center';
     temperatureText.textContent = `Temperature, °C`;
     hourForecastContainer.insertBefore(temperatureText, hourForecastDegreeContainer);
-
     });
   })
-  .catch(error => {
-    const searchField = document.querySelector('#search');
-    const previousLocation = userLocation.textContent.split(',')[0];
-    console.log(previousLocation);
-    if (searchField.value !== '') {
-    searchError.textContent = 'No matching location found';
-    }
-    console.log(userLocation);
-    fetchForecastQuery(previousLocation);
-  });
+  // .catch(error => {
+  //   const searchField = document.querySelector('#search');
+  //   const previousLocation = userLocation.textContent.split(',')[0];
+  //   console.log(previousLocation);
+  //   if (searchField.value !== '') {
+  //   searchError.textContent = 'No matching location found';
+  //   }
+  //   console.log(userLocation);
+  //   fetchForecastQuery(previousLocation);
+  // });
 }
 
 const defaultForecastQuery = 'Moscow';
