@@ -235,8 +235,7 @@ const fetchForecastQuery = function(query) {
         dayElement.style.borderRadius = '5px 5px 0 0';
 
         if (counter === 1) {
-        dayElement.style.border = '2px solid black';
-        dayElement.style.borderBottom = 'none';
+        dayElement.classList.add('selected-day');
         }
         quickForecastContainer.appendChild(dayElement);
 
@@ -339,10 +338,35 @@ const fetchForecastQuery = function(query) {
     }
 
     let firstDay = forecastArray[0];
-    console.log(forecastArray[0]);
-    console.log(forecastArray[0].hour)
+    console.log(firstDay);
 
     showDayHourForecast(firstDay);
+
+    const removePreviousHourForecast = function() {
+      hourContainer.textContent = '';
+      hourForecastDegreeContainer.textContent = '';
+    }
+
+    const changeHourForecastDay = function() {
+      let forecastDays = document.querySelectorAll('.day');
+
+      for (let i = 0; i < forecastDays.length; i++) {
+        forecastDays[i].addEventListener('click', () => {
+          removePreviousHourForecast();
+          showDayHourForecast(forecastArray[i]);
+
+          let currentlySelected = document.querySelector('.selected-day');
+          console.log(currentlySelected);
+          if (currentlySelected) {
+            currentlySelected.classList.remove('selected-day');
+          }
+
+          forecastDays[i].classList.add('selected-day');
+        });
+      }
+    }
+
+    changeHourForecastDay();
 
     const temperatureText = document.createElement('div');
     temperatureText.classList.add('hour-temperature-text');
@@ -351,16 +375,16 @@ const fetchForecastQuery = function(query) {
     hourForecastContainer.insertBefore(temperatureText, hourForecastDegreeContainer);
     });
   })
-  // .catch(error => {
-  //   const searchField = document.querySelector('#search');
-  //   const previousLocation = userLocation.textContent.split(',')[0];
-  //   console.log(previousLocation);
-  //   if (searchField.value !== '') {
-  //   searchError.textContent = 'No matching location found';
-  //   }
-  //   console.log(userLocation);
-  //   fetchForecastQuery(previousLocation);
-  // });
+  .catch(error => {
+    const searchField = document.querySelector('#search');
+    const previousLocation = userLocation.textContent.split(',')[0];
+    console.log(previousLocation);
+    if (searchField.value !== '') {
+    searchError.textContent = 'No matching location found';
+    }
+    console.log(userLocation);
+    fetchForecastQuery(previousLocation);
+  });
 }
 
 const defaultForecastQuery = 'Moscow';

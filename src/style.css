@@ -70,7 +70,7 @@ i{
   gap: 5px;
 }
 
-.search-icon:hover, .switch-degrees:hover {
+.search-icon:hover, .switch-degrees:hover, .day:hover {
   cursor: pointer;
 }
 
@@ -79,16 +79,10 @@ i{
   display: inline-block;
 }
 
-.hour {
-  width: 3.2rem;
-  text-align: center;
-}
-
 .hour-degree, .hour {
   width: 3.2rem;
   text-align: center;
 }
-
 
 .location-time, .switch-degrees {
   margin-bottom: 10px;
@@ -117,8 +111,8 @@ i{
   flex: 1;
 }
 
-.hour-forecast-container, .quick-forecast-container {
-  width: 40%;
+.hour-forecast-container{
+  width: 51%;
   min-width: max-content;
   box-sizing: border-box;
 }
@@ -135,7 +129,6 @@ i{
   border: 2px solid black;
   border-radius: 0 0 5px 5px;
   border-top: none;
-  width: 20%;
 }
 
 .quick-forecast-temperature {
@@ -150,8 +143,15 @@ i{
 
 .min {
   padding-top: 15px;
+  color: blue;
 }
 
 .max {
   padding-top: 5px;
+  color: red;
+}
+
+.selected-day {
+  border: 2px solid black;
+  border-bottom: none;
 }
