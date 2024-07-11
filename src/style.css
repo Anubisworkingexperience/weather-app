@@ -80,7 +80,7 @@ i{
 }
 
 .hour-degree, .hour {
-  width: 3.2rem;
+  width: 12.5%;
   text-align: center;
 }
 
@@ -108,18 +108,16 @@ i{
 .forecast-container {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  width: 100%;
 }
 
-.hour-forecast-container{
-  width: 51%;
-  min-width: max-content;
+.quick-forecast-container, .hour-forecast-container {
   box-sizing: border-box;
 }
 
 .quick-forecast-container {
-  display: flex;
   gap: 15px;
+  width: max-content;
 }
 
 .hour-forecast-container {
@@ -129,6 +127,7 @@ i{
   border: 2px solid black;
   border-radius: 0 0 5px 5px;
   border-top: none;
+  width: 47.4rem;
 }
 
 .quick-forecast-temperature {
