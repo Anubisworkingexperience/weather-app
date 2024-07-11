@@ -105,8 +105,6 @@ const fetchCurrentWeatherQuery = function(query) {
 
     formatDateAndTime();
 
-    let dateArrays = formatDateAndTime();
-
     const setCurrentWeatherInformation = function() {
       userLocation.textContent = `${location.name}, ${location.country}`;
 
@@ -169,47 +167,19 @@ const fetchCurrentWeatherQuery = function(query) {
   
     switchDegreeValues();
   })
-  .catch(error => {
+  .catch(function() {
     const searchField = document.querySelector('#search');
     if (searchField.value !== '') {
       searchError.textContent = 'No matching location found';
       }
   });
 });
-  return location;
 }
 
 const searchError = document.querySelector('.search-error');
 const defaultCurrentWeatherQuery = 'Moscow';
 
 fetchCurrentWeatherQuery(defaultCurrentWeatherQuery);
-
-const updateConditionIcon = function(conditionArray, iconElement, currentWeatherCode) {
-  if (isDay) {
-    if (currentWeatherCode === 1000) {
-      iconElement.classList.add(`wi-day-sunny`);
-    }
-    else {
-      for (let item of conditionArray) {
-        if (item.code !== 1000 && item.code === currentWeatherCode) {
-          iconElement.classList.add(`wi-day-${item.icon}`);
-        }
-      }
-    }
-  }
-  else {
-    if (currentWeatherCode === 1000) {
-      iconElement.classList.add(`wi-night-clear`);
-    }
-    else {
-      for (let item of conditionArray) {
-        if (item.code !== 1000 && item.code === currentWeatherCode) {
-        iconElement.classList.add(`wi-night-${item.icon}`);
-        }
-      }
-    }
-  }   
-} 
 
 const fetchForecastQuery = function(query) {
   fetch(`https://api.weatherapi.com/v1/forecast.json?key=c00761ba763b43ccb17175426240106&q=${query}&days=10&aqi=no&alerts=yes`, {mode: "cors"}).then(response => {
@@ -227,7 +197,8 @@ const fetchForecastQuery = function(query) {
       console.log(forecastArray);
 
       const showQuickForecast = function() {
-        let counter = 0;
+      let counter = 0;
+
       for (let day of forecastArray) {
         counter += 1
         let dayElement = document.createElement('div');
@@ -324,16 +295,12 @@ const fetchForecastQuery = function(query) {
       hourTime.textContent = `${date.getHours()}:${date.getMinutes()}0`;
       hourElement.appendChild(hourTime);
 
-      // let currentCondition = document.createElement('i');
-      // hourElement.appendChild(currentCondition);
+      hourContainer.appendChild(hourElement);
 
-      // let hourCode = hourArray[i].hour.condition.code;
-        hourContainer.appendChild(hourElement);
-
-        let temperatureDegreesElement = document.createElement('div');
-        temperatureDegreesElement.classList.add('hour-degree');
-        temperatureDegreesElement.textContent = `${hourArray[i].temp_c}`;
-        hourForecastDegreeContainer.appendChild(temperatureDegreesElement);
+      let temperatureDegreesElement = document.createElement('div');
+      temperatureDegreesElement.classList.add('hour-degree');
+      temperatureDegreesElement.textContent = `${hourArray[i].temp_c}`;
+      hourForecastDegreeContainer.appendChild(temperatureDegreesElement);
       }
     }
 
@@ -375,7 +342,7 @@ const fetchForecastQuery = function(query) {
     hourForecastContainer.insertBefore(temperatureText, hourForecastDegreeContainer);
     });
   })
-  .catch(error => {
+  .catch(function() {
     const searchField = document.querySelector('#search');
     const previousLocation = userLocation.textContent.split(',')[0];
     console.log(previousLocation);
