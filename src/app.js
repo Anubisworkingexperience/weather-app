@@ -220,12 +220,12 @@ const fetchForecastQuery = function(query) {
 
         let minTemperature = document.createElement('div');
         minTemperature.classList.add('min');
-        minTemperature.textContent = day.day.mintemp_c > 0 ? '+' + day.day.mintemp_c : '-' + day.day.mintemp_c;
+        minTemperature.textContent = day.day.mintemp_c > 0 ? '+' + day.day.mintemp_c : day.day.mintemp_c;
         dayElement.appendChild(minTemperature);
 
         let maxTemperature = document.createElement('div');
         maxTemperature.classList.add('max');
-        maxTemperature.textContent = day.day.maxtemp_c > 0 ? '+' + day.day.maxtemp_c : '-' + day.day.maxtemp_c;
+        maxTemperature.textContent = day.day.maxtemp_c > 0 ? '+' + day.day.maxtemp_c : day.day.maxtemp_c;
         dayElement.appendChild(maxTemperature);
 
         let temperatureContainer = document.createElement('div');
